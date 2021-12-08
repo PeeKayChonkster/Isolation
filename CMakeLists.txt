@@ -12,4 +12,10 @@ list(TRANSFORM ALL_SRC PREPEND "src/")
 
 add_executable(Isolation ${ALL_SRC})
 
+target_include_directories(Isolation PRIVATE external/raylib/src)
+
+add_subdirectory(external/raylib)
+
+target_link_libraries(Isolation PRIVATE raylib)
+
 set_target_properties(Isolation PROPERTIES DEBUG_POSTFIX -d)
