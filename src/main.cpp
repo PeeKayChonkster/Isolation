@@ -1,32 +1,47 @@
-#include <raylib.h>
-
+#include "raylib-cpp.hpp"
+#include "chonky_timer.hpp"
+#include "object.hpp"
 
 int main()
 {
-    InitWindow(600u, 600u, "chonky engine is where it's at");
-    Model temp = LoadModel("res/models/Computer.gltf");
-    Camera3D camera;
+    raylib::Window window(600u, 600u, "chonky engine is where it's at");
+    window.SetTargetFPS(60);
+
+    raylib::Camera3D camera;
     camera.position = Vector3{0.0f, 10.0f, 10.0f};
     camera.target = Vector3{0.0f, 0.0f, 0.0f};
     camera.up = Vector3{0.0f, 1.0f, 0.0f};
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
+    chEn::Object obj("tempObject", "./res/models/test_cube.obj");
+    obj.drawWires = true;
+    float deltaTime = 0.0f;
+    chEn::Timer deltaTimer;
 
-    while(!WindowShouldClose())
+    deltaTimer.start();
+    while(!window.ShouldClose())
     { 
+        deltaTime = deltaTimer.peekSinceLastPeek();
+
+        if(IsKeyDown(KEY_DOWN)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, 0.1f));
+        if(IsKeyDown(KEY_UP)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, -0.1f));
+        if(IsKeyDown(KEY_RIGHT)) obj.transform.move(raylib::Vector3(0.1f, 0.0f, 0.0f));
+        if(IsKeyDown(KEY_LEFT)) obj.transform.move(raylib::Vector3(-0.1f, 0.0f, 0.0f));
+
         BeginDrawing();
-            ClearBackground(GRAY);
-            BeginMode3D(camera);
-            DrawModelEx(temp, Vector3{0.0f, 0.0f, 0.0f}, Vector3{1.0f, 0.0f, 0.0f}, 90.0f, Vector3{1.0f, 1.0f, 1.0f}, WHITE);
-            //DrawCube(Vector3(), 2.0f, 2.0f, 2.0f, GREEN);
-            
-            DrawGrid(10, 1.0f);
+        
+        window.ClearBackground(RAYWHITE);
 
-            EndMode3D();
+        BeginMode3D(camera);
+
+        obj.draw();
+        DrawGrid(10.0f, 1.0f);
+
+        EndMode3D();
+
         EndDrawing();
-    }
+    }  
 
-    UnloadModel(temp);
-    CloseWindow();
+    window.Close();
     return 0;
 }

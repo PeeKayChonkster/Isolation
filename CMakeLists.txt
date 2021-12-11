@@ -5,7 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 set(Isolation_SRC
-    main.cpp
+    main.cpp transform.cpp object.cpp
     )
 
 list(TRANSFORM Isolation_SRC PREPEND "src/")
@@ -13,6 +13,7 @@ list(TRANSFORM Isolation_SRC PREPEND "src/")
 add_executable(Isolation ${Isolation_SRC})
 
 target_include_directories(Isolation PRIVATE external/raylib/src)
+target_include_directories(Isolation PRIVATE external/raylib-cpp/include)
 
 add_subdirectory(external/raylib)
 
