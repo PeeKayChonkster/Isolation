@@ -4,7 +4,6 @@
 #include <vector>
 #include <raylib-cpp.hpp>
 
-using RayTransform = Transform;
 
 namespace chEn
 {
@@ -13,7 +12,7 @@ namespace chEn
     private:
         raylib::Transform transform;
     public:
-        chEn::Transform* parent;
+        Transform* parent;
         std::vector<class Object*> children;
 
         raylib::Vector3 getGlobalPosition() const;
@@ -33,6 +32,8 @@ namespace chEn
         void setGlobalScale(raylib::Vector3 scale);
 
         void move(raylib::Vector3 translation);
+        void rotate(raylib::Vector3 axis, float angle);
+        void lookAt(raylib::Vector3 point);
 
         raylib::Transform getRayTransform() const;
 

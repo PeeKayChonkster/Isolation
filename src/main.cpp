@@ -4,7 +4,7 @@
 
 int main()
 {
-    raylib::Window window(600u, 600u, "chonky engine is where it's at");
+    raylib::Window window(1000u, 1000u, "chonky engine is where it's at");
     window.SetTargetFPS(60);
 
     raylib::Camera3D camera;
@@ -23,14 +23,20 @@ int main()
     { 
         deltaTime = deltaTimer.peekSinceLastPeek();
 
-        if(IsKeyDown(KEY_DOWN)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, 0.1f));
-        if(IsKeyDown(KEY_UP)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, -0.1f));
-        if(IsKeyDown(KEY_RIGHT)) obj.transform.move(raylib::Vector3(0.1f, 0.0f, 0.0f));
-        if(IsKeyDown(KEY_LEFT)) obj.transform.move(raylib::Vector3(-0.1f, 0.0f, 0.0f));
+        if(IsKeyDown(KEY_S)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, 0.1f));
+        if(IsKeyDown(KEY_W)) obj.transform.move(raylib::Vector3(0.0f, 0.0f, -0.1f));
+        if(IsKeyDown(KEY_D)) obj.transform.move(raylib::Vector3(0.1f, 0.0f, 0.0f));
+        if(IsKeyDown(KEY_A)) obj.transform.move(raylib::Vector3(-0.1f, 0.0f, 0.0f));
+        if(IsKeyDown(KEY_SPACE)) obj.transform.move(raylib::Vector3(0.0f, 0.1f, 0.0f));
+        if(IsKeyDown(KEY_LEFT_CONTROL)) obj.transform.move(raylib::Vector3(0.0f, -0.1f, 0.0f));
+        if(IsKeyDown(KEY_Q)) obj.transform.rotate(raylib::Vector3(0.0f, 1.0f, 0.0f), 0.02f);
+        if(IsKeyDown(KEY_E)) obj.transform.rotate(raylib::Vector3(0.0f, 1.0f, 0.0f), -0.02f);
+        
 
         BeginDrawing();
         
         window.ClearBackground(RAYWHITE);
+        DrawFPS(10, 10);
 
         BeginMode3D(camera);
 

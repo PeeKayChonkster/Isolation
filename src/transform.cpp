@@ -68,9 +68,24 @@ void chEn::Transform::setGlobalScale(raylib::Vector3 scale)
     transform.scale.z = scale.z / globalScale.z;
 }
 
+
 void chEn::Transform::move(raylib::Vector3 translate)
 {
     transform.translation += translate; 
+}
+
+void chEn::Transform::rotate(raylib::Vector3 axis, float angle)
+{
+    axis = axis.Normalize();
+    float sine = sin(angle / 2.0f);
+    transform.rotation = getGlobalRotation() * raylib::Quaternion(axis.x * sine, axis.y * sine, axis.z * sine, cos(angle/2.0f));
+}
+
+void chEn::Transform::lookAt(raylib::Vector3 point)
+{
+    
+    //  WASN'T TESTED!
+    transform.rotation = raylib::Quaternion::Identity().Transform(raylib::Matrix().LookAt(getGlobalPosition(), point, raylib::Vector3::Up()));
 }
 
 raylib::Transform chEn::Transform::getRayTransform() const
