@@ -33,8 +33,7 @@ build() {
 }
 
 build_and_run() {
-    build
-    run
+    build && run
 }
 
 run() {

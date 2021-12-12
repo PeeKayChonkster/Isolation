@@ -5,7 +5,7 @@
 #include <raylib-cpp.hpp>
 
 
-namespace chEn
+namespace chen
 {
     class Transform
     {
@@ -13,7 +13,7 @@ namespace chEn
         raylib::Transform transform;
     public:
         Transform* parent;
-        std::vector<class Object*> children;
+        std::vector<class Node*> children;
 
         raylib::Vector3 getGlobalPosition() const;
         raylib::Quaternion getGlobalRotation() const;
@@ -38,8 +38,8 @@ namespace chEn
         raylib::Transform getRayTransform() const;
 
         // this function is dangerous, child transform pointer could be non-constant (if it's inside of std::vector for example)
-        void addChild(Object* child);
-        void removeChild(Object* child);
+        void addChild(Node* child);
+        void removeChild(Node* child);
     };
 }
 

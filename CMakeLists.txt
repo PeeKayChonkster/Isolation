@@ -5,7 +5,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 set(Isolation_SRC
-    main.cpp transform.cpp object.cpp
+    main.cpp transform.cpp node.cpp
+    billboard.cpp
     )
 
 list(TRANSFORM Isolation_SRC PREPEND "src/")

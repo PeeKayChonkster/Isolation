@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
 
-namespace chEn
+namespace chen
 {
     typedef std::chrono::seconds seconds;
     typedef std::chrono::milliseconds milliseconds;

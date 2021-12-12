@@ -11,8 +11,13 @@
 },
 {
   "directory": "/home/chonk/Projects/C++/Isolation/out",
-  "command": "/usr/bin/c++  -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src -I/home/chonk/Projects/C++/Isolation/project/external/raylib-cpp/include -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src/external/glfw/include   -std=c++17 -Wall -g   -o CMakeFiles/Isolation.dir/src/object.cpp.o -c /home/chonk/Projects/C++/Isolation/project/src/object.cpp",
-  "file": "/home/chonk/Projects/C++/Isolation/project/src/object.cpp"
+  "command": "/usr/bin/c++  -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src -I/home/chonk/Projects/C++/Isolation/project/external/raylib-cpp/include -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src/external/glfw/include   -std=c++17 -Wall -g   -o CMakeFiles/Isolation.dir/src/node.cpp.o -c /home/chonk/Projects/C++/Isolation/project/src/node.cpp",
+  "file": "/home/chonk/Projects/C++/Isolation/project/src/node.cpp"
+},
+{
+  "directory": "/home/chonk/Projects/C++/Isolation/out",
+  "command": "/usr/bin/c++  -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src -I/home/chonk/Projects/C++/Isolation/project/external/raylib-cpp/include -I/home/chonk/Projects/C++/Isolation/project/external/raylib/src/external/glfw/include   -std=c++17 -Wall -g   -o CMakeFiles/Isolation.dir/src/billboard.cpp.o -c /home/chonk/Projects/C++/Isolation/project/src/billboard.cpp",
+  "file": "/home/chonk/Projects/C++/Isolation/project/src/billboard.cpp"
 },
 {
   "directory": "/home/chonk/Projects/C++/Isolation/out/external/raylib/raylib",
