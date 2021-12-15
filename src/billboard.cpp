@@ -1,6 +1,7 @@
 #include "billboard.hpp"
+#include "debug.hpp"
 
-chen::Billboard::Billboard(std::string filePath, raylib::Camera3D* currentCamera, std::string name): Node(name), texture(filePath), currentCamera(currentCamera) {}
+chen::Billboard::Billboard(std::string filePath, raylib::Camera3D* currentCamera, std::string name): Node(name), texture(filePath), currentCamera(currentCamera), shader("", "./res/shaders/billboard.fs") {} 
 
 chen::Billboard::~Billboard()
 {
@@ -10,6 +11,9 @@ chen::Billboard::~Billboard()
 void chen::Billboard::draw()
 {
     DRAW_OVERRIDE
-
+    
+    chen::Debug::printLine("drawing " + name);
+    BeginShaderMode(shader);
     DrawBillboard(*currentCamera, texture, transform.getGlobalPosition(), size, tint);
+    EndShaderMode();
 }

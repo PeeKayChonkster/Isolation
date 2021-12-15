@@ -10,6 +10,7 @@ namespace chen
     private:
         raylib::Texture2D texture;
         raylib::Camera3D* currentCamera;
+        raylib::Shader shader;
     public:
         Billboard() = delete;
         Billboard(std::string filePath, raylib::Camera3D* currentCamera, std::string name = "_noname_");

@@ -14,6 +14,7 @@ int chen::Node::getNewId()
         if(!nodeCache[i]) 
         {
             chen::Debug::printPersistentLine("Gave out id=" + std::to_string(i) + " to node \"" + this->name + "\"");
+            nodeCache[i] = true;
             return i;
         }
     }
@@ -29,6 +30,7 @@ chen::Node::Node(std::string name) : name(name)
     if(int newId = getNewId() < 0) throw "No more vacant node id's left";
     else id = static_cast<uint16_t>(newId);
     transform = Transform();
+    transform.node = this;
 }
 
 chen::Node::~Node()
@@ -57,7 +59,7 @@ void chen::Node::startChildren()
 {
     for(uint i = 0u; i < transform.children.size(); ++i)
     {
-        transform.children[i]->start();
+        transform.children[i]->node->start();
     }
 }
 
@@ -65,7 +67,7 @@ void chen::Node::updateChildren(float deltaTime)
 {
     for(uint i = 0u; i < transform.children.size(); ++i)
     {
-        transform.children[i]->update(deltaTime);
+        transform.children[i]->node->update(deltaTime);
     }
 }
 
@@ -73,8 +75,13 @@ void chen::Node::drawChildren()
 {
     for(uint i = 0u; i < transform.children.size(); ++i)
     {
-        transform.children[i]->draw();
+        transform.children[i]->node->draw();
     }
+}
+
+uint16_t chen::Node::getId() const
+{
+    return id;
 }
 
 void chen::Node::start()

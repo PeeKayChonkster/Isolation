@@ -83,7 +83,6 @@ void chen::Transform::rotate(raylib::Vector3 axis, float angle)
 
 void chen::Transform::lookAt(raylib::Vector3 point)
 {
-    
     //  WASN'T TESTED!
     transform.rotation = raylib::Quaternion::Identity().Transform(raylib::Matrix().LookAt(getGlobalPosition(), point, raylib::Vector3::Up()));
 }
@@ -95,17 +94,21 @@ raylib::Transform chen::Transform::getRayTransform() const
 
 void chen::Transform::addChild(Node* child)
 {
-    if(std::find(children.begin(), children.end(), child) != children.end())
+    auto predicate = [&](Transform* ch) { return ch->node->getId() == child->getId(); };
+    if(std::find_if(children.begin(), children.end(), predicate) == children.end())
     {
-        children.push_back(child);
+        children.push_back(&child->transform);
+        child->transform.parent = this;
     }
 }
 
 void chen::Transform::removeChild(Node* child)
 {
-    auto childIter = std::find(children.begin(), children.end(), child);
+    auto predicate = [&](Transform* ch) { return ch->node->getId() == child->getId(); };
+    auto childIter = std::find_if(children.begin(), children.end(), predicate);
     if(childIter != children.end())
     {
         children.erase(childIter);
+        child->transform.parent = nullptr;
     }
 }

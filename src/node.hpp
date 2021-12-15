@@ -50,10 +50,11 @@ namespace chen
         Node(std::string name = "_noname_");
         ~Node();
 
+        uint16_t getId() const;
+
         virtual void start();
         virtual void update(float deltaTime);
         virtual void draw();
-
     };
 }
 #endif // CHEN_NODE

@@ -12,8 +12,9 @@ namespace chen
     private:
         raylib::Transform transform;
     public:
+        class Node* node;
         Transform* parent;
-        std::vector<class Node*> children;
+        std::vector<Transform*> children;
 
         raylib::Vector3 getGlobalPosition() const;
         raylib::Quaternion getGlobalRotation() const;
