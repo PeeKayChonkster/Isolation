@@ -8,6 +8,8 @@
 
 namespace chen
 {
+    typedef unsigned int uint;
+
     class Debug
     {
     private:
@@ -33,10 +35,10 @@ namespace chen
         {
             uint i;
             for(i = 0u; i < persistentLines.size(); ++i)
-                DrawText(persistentLines[i].c_str(), textPosition.first, textPosition.second + (i + 1) * fontSize, fontSize, WHITE);
+                DrawText(persistentLines[i].c_str(), textPosition.first, textPosition.second + (i + 1u) * fontSize, fontSize, WHITE);
 
             for(uint j = 0u; j < lines.size(); ++i, ++j)
-                DrawText(lines[j].c_str(), textPosition.first, textPosition.second + (i + 1) * fontSize, fontSize, WHITE);
+                DrawText(lines[j].c_str(), textPosition.first, textPosition.second + (i + 1u) * fontSize, fontSize, WHITE);
             
             lines.clear();
         }

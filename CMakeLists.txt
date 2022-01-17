@@ -2,11 +2,14 @@ cmake_minimum_required(VERSION 3.2)
 project(Isolation VERSION 1 LANGUAGES C CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(Isolation_SRC
-    main.cpp transform.cpp node.cpp
-    billboard.cpp
+    main.cpp 
+    transform.cpp transform.hpp
+    node.cpp node.hpp
+    billboard.cpp billboard.hpp
     )
 
 list(TRANSFORM Isolation_SRC PREPEND "src/")

@@ -1,5 +1,5 @@
-#ifndef CHEN_TRANSFORM
-#define CHEN_TRANSFORM
+#ifndef CHEN_TRANSFORM_HPP
+#define CHEN_TRANSFORM_HPP
 
 #include <vector>
 #include <raylib-cpp.hpp>
@@ -44,4 +44,4 @@ namespace chen
     };
 }
 
-#endif // CHEN_TRANSFORM
+#endif // CHEN_TRANSFORM_HPP

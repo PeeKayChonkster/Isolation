@@ -1,7 +1,8 @@
-#include "raylib-cpp.hpp"
+#include <raylib-cpp.hpp>
 #include "chonky_timer.hpp"
 #include "billboard.hpp"
 #include "debug.hpp"
+#include "resman.hpp"
 
 #if defined(PLATFORM_DESKTOP)
     #define GLSL_VERSION            330
@@ -11,8 +12,10 @@
 
 int main()
 {
-    raylib::Window window(1000u, 1000u, "chonky engine is where it's at");
+    raylib::Window window(1000u, 800u, "chonky engine is where it's at");
     window.SetTargetFPS(60);
+
+    chen::Resman resman;
 
     raylib::Camera3D camera;    
     raylib::Vector3 cameraInitialOffset;
@@ -21,7 +24,6 @@ int main()
     camera.up = Vector3{0.0f, 1.0f, 0.0f};
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
-
 
     chen::Billboard sadman("./res/textures/sad_man.png", &camera, "Sad man");
     chen::Billboard sadson("./res/textures/sad_man.png", &camera, "Sad son");
@@ -62,7 +64,6 @@ int main()
 
         sadson.draw();
         sadman.draw();
-
 
         DrawGrid(10.0f, 1.0f);
 

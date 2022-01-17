@@ -1,5 +1,5 @@
-#ifndef CHEN_NODE
-#define CHEN_NODE
+#ifndef CHEN_NODE_HPP
+#define CHEN_NODE_HPP
 
 #include <string>
 #include <variant>
@@ -57,4 +57,5 @@ namespace chen
         virtual void draw();
     };
 }
-#endif // CHEN_NODE
+
+#endif // CHEN_NODE_HPP
