@@ -10,6 +10,7 @@ set(Isolation_SRC
     transform.cpp transform.hpp
     node.cpp node.hpp
     billboard.cpp billboard.hpp
+    resman_static.hpp exception.hpp
     )
 
 list(TRANSFORM Isolation_SRC PREPEND "src/")

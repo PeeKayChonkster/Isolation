@@ -4,7 +4,7 @@
 #include <string>
 #include <variant>
 #include <array>
-#include "transform.hpp"
+#include "transform3D.hpp"
 
 namespace chen
 {
@@ -21,6 +21,7 @@ namespace chen
         virtual void draw() = 0;
     };
 
+
     class Runnable
     {
     public:
@@ -28,7 +29,8 @@ namespace chen
         virtual void update(float deltaTime) = 0;
     };
 
-    class Node
+
+    class Node3D
     {
     private:
         uint16_t id;
@@ -42,13 +44,13 @@ namespace chen
         void drawChildren();
 
     public:
-        chen::Transform transform;
+        chen::Transform3D transform;
         std::string name;
         bool visible = true;
 
-        Node();
-        Node(std::string name = "_noname_");
-        ~Node();
+        Node3D();
+        Node3D(std::string name = "_noname_");
+        ~Node3D();
 
         uint16_t getId() const;
 

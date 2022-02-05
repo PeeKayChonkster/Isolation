@@ -10,6 +10,8 @@
 #include <sstream>
 #include <unordered_map>
 #include <memory>
+#include <raylib-cpp.hpp>
+#include "exception.hpp"
 
 namespace chen
 {
@@ -26,10 +28,10 @@ struct Resfile
 {
     std::string path;
     unsigned int size;
-    std::unique_ptr<char[]> data;
+    std::unique_ptr<unsigned char[]> data;
 
     Resfile(): Resfile("", 0, nullptr) {}
-    Resfile(std::string p, unsigned int s, char* d): path(p), size(s), data(d) {}
+    Resfile(std::string p, unsigned int s, unsigned char* d): path(p), size(s), data(d) {}
     Resfile(const Resfile& other) = delete;
     Resfile(Resfile&& other)
     {
@@ -67,9 +69,9 @@ class Resman
 {
 private:
     inline static const std::string packageName = "resman_package.res";
-    std::string packagePath;
-    const std::string pathIdendifier = "%PATH";
-    std::unordered_map<std::string, Resfile> data;
+    inline static std::string packagePath;
+    inline static const std::string pathIdendifier = "%PATH";
+    inline static std::unordered_map<std::string, Resfile> data;
 
     inline static bool isValidExtension(fs::path path)
     {
@@ -81,7 +83,7 @@ private:
             ;
     }
 
-    bool appendData(std::string path)
+    static bool appendData(std::string path)
     {
         std::ifstream ifstream(path, std::ios::binary);
         if(!ifstream.good()) return false;
@@ -92,16 +94,17 @@ private:
         ss << ifstream.rdbuf();
         ifstream.close();
         std::string str(std::move(ss.str()));
-        char* buf = new char[str.length()];
-        buf = strcpy(buf, str.c_str());
+        unsigned char* buf = new unsigned char[str.length()];
+        std::copy(str.begin(), str.end(), buf);
         //! emplace in datamap isn't working for some reason
         data.insert({ path, Resfile(path, str.length(), buf) });
         return true;
     }
 public:
-    bool packFolder(std::string folderPath, std::string outPath = "." + separator + packageName)
+    static bool packFolder(std::string folderPath, std::string outPath = "." + separator + packageName)
     {
         fs::path fPath(folderPath);
+        fPath.make_preferred();
         if(!fs::exists(fPath) || !fs::is_directory(fPath)) return false;
         packagePath = outPath;
         std::ofstream ofstream(outPath, std::ios::binary);
@@ -124,10 +127,11 @@ public:
         return true;
     }
 
-    bool loadResourceFile()
+    static bool loadResourceFile(std::string path = "." + separator + packageName)
     {
-        if(packagePath.empty()) return false;
+        packagePath = path;
         std::ifstream ifstream(packagePath, std::ios::binary);
+        if(!ifstream.good()) throw CHEN_EXCEPTION("Resman couldn't load package.");
         // char buffer
         char c = 0;
         std::string rawData;
@@ -150,8 +154,10 @@ public:
                     if(!chunkPath.empty())
                     {
                         // write current chunk to the datamap
-                        char* buf = new char[rawData.length()];
-                        buf = strcpy(buf, rawData.c_str());
+                        unsigned char* buf = new unsigned char[rawData.length()];
+                        std::copy(rawData.begin(), rawData.end(), buf);
+                        // change path separators accorging to the system
+                        chunkPath = fs::path(chunkPath).make_preferred().string();
                         //! emplace in datamap isn't working for some reason
                         data.insert({ chunkPath, Resfile(chunkPath, rawData.length(), buf) });
                         chunkPath.clear();
@@ -176,14 +182,22 @@ public:
             rawData.push_back(c);
         }
         // insert last chunk
-        char* buf = new char[rawData.length()];
-        buf = strcpy(buf, rawData.c_str());
+        unsigned char* buf = new unsigned char[rawData.length()];
+        std::copy(rawData.begin(), rawData.end(), buf);
         data.insert({ chunkPath, Resfile(chunkPath, rawData.length(), buf) });
         ifstream.close();
+
+        // TEMP
+        for(auto it = data.begin(); it != data.end(); ++it)
+        {
+            std::cout << "DATA PATHS" << std::endl;
+            std::cout << it->first << std::endl;
+        }
+
         return true;
     }
 
-    Resfile* getFile(std::string path)
+    static Resfile* getFile(std::string path)
     {
         fs::path p(path);
         p.make_preferred();
@@ -212,6 +226,14 @@ public:
             //std::cout << "Found file in the datamap." << std::endl;
             return &iter->second;
         }
+    }
+
+    // Functions, specific to RAYLIB
+    static raylib::Texture loadTexture(std::string path)
+    {
+        Resfile* fileData = getFile(path);
+        if(!fileData) throw CHEN_EXCEPTION("File loading failed.");
+        return raylib::Image(fs::path(path).extension().string(), fileData->data.get(), fileData->size).LoadTexture();
     }
 };
 }

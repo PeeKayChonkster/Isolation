@@ -1,8 +1,8 @@
 #include "billboard.hpp"
 #include "debug.hpp"
-#include "resman_static.hpp"
+#include "resman.hpp"
 
-chen::Billboard::Billboard(std::string filePath, raylib::Camera3D* currentCamera, std::string name): Node(name), texture(filePath), currentCamera(currentCamera), shader("", "./res/shaders/billboard.fs") {} 
+chen::Billboard::Billboard(std::string filePath, raylib::Camera3D* currentCamera, std::string name): Node(name), texture(Resman::loadTexture(filePath)), currentCamera(currentCamera), shader("", "./res/shaders/billboard.fs") {} 
 
 chen::Billboard::~Billboard()
 {

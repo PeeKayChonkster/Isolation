@@ -1,22 +1,25 @@
 ﻿$PROJECT_NAME = "Isolation"
 $PROJECT_PATH = "D:\Projects\C++\Isolation\project"
 $BUILD_PATH = "${PROJECT_PATH}\..\out"
-$BIN_PATH = "${PROJECT_PATH}\..\out\bin\debug"
+$BIN_PATH = "${PROJECT_PATH}\..\out\bin"
+$BUILD_TYPE = "Debug";
 
 function configure {
     Write-Host "configuring...";
-    cmake -S . -B $BUILD_PATH;
+    Write-Host "Build type:"$BUILD_TYPE; 
+    cmake -S . -B $BUILD_PATH -G Ninja -DCMAKE_BUILD_TYPE="$BUILD_TYPE";
     if($?) { Write-Host "configuring completed." -ForegroundColor Green; };
 }
 
 function build {
     Write-Host "building...";
-    cmake --build $BUILD_PATH;
+    cmake --build $BUILD_PATH --config "$BUILD_TYPE";
     if($?) { Write-Host "build completed." -ForegroundColor Green; };
 }
 
 function run {
     Write-Host "running...";
+    cd "$BIN_PATH";
     Invoke-Expression "${BIN_PATH}\${PROJECT_NAME}-d.exe";
 }
 
@@ -43,7 +46,8 @@ while(1)
         4 { run; Break }
         5 { cleanall; Break }
         'q' { Exit; Break }
-        defalut { Break }
+        default { Break }
 
     }
+    cd "$PROJECT_PATH";
 }
